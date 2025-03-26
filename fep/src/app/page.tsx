@@ -83,13 +83,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen p-0 sm:p-0">
+    <div className="flex flex-col items-center justify-start min-h-screen">
 
       {/*
         A container to hold both the animation as a background
         and the ad-read text overlapping it.
+        Add padding-top to push it down from the top bar.
       */}
-      <div className="relative w-full min-h-[250px]">
+      <div className="relative w-full min-h-[250px] pt-16">
         {/* The animation as a background */}
         <div className="absolute inset-0 z-0">
           <motion.svg
@@ -100,19 +101,6 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <defs>
-              <pattern
-                id="dots"
-                x="0"
-                y="0"
-                width="10"
-                height="10"
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx="2" cy="2" r="1" fill="#333333" />
-              </pattern>
-            </defs>
-
             <rect x="0" y="0" width="1250" height="250" />
 
             {paths.map((pathD, i) => (
@@ -122,6 +110,7 @@ export default function Home() {
                 stroke={colors[i]}
                 strokeWidth="2"
                 fill="none"
+                style={{ opacity: 0.25 }}
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 4, ease: "easeInOut" }}
@@ -133,7 +122,6 @@ export default function Home() {
         {/*
           The ad-read text container with an overlap:
           push it upward a bit so it overlaps the background.
-          Increase top padding as needed for aesthetics.
         */}
         <div
           className={`${robotoSlab.className} relative z-10 max-w-2xl mx-auto px-4 sm:px-8 text-center pt-10 pb-6`}
@@ -162,10 +150,10 @@ export default function Home() {
       </div>
 
       {/*
-        Modern, minimalistic, asymmetrical content area with some extra space
-        to separate from the text above
+        Modern, minimalistic, asymmetrical content area with padding
+        to separate it from the text above
       */}
-      <div className="relative w-screen mt-16 px-4 sm:px-8">
+      <div className="relative w-screen mt-24 px-4 sm:px-8">
         {/*
           Background color block behind placeholders,
           extends ~50px top/bottom, from left=40% to the right edge of the screen
