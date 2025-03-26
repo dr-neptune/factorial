@@ -1,6 +1,70 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
+/**
+ * Generate an array of points representing a basic Geometric Brownian Motion (GBM)
+ */
+function generateGBM(
+  steps = 50,
+  S0 = 100,
+  mu = 0.05,
+  sigma = 0.2,
+  dt = 1
+): Array<{ x: number; y: number }> {
+  const points = [];
+  let S = S0;
+
+  for (let i = 0; i < steps; i++) {
+    // Simple random normal
+    const z =
+      Math.sqrt(-2.0 * Math.log(Math.random())) *
+      Math.cos(2.0 * Math.PI * Math.random());
+    // GBM update formula
+    S =
+      S *
+      Math.exp(
+        (mu - 0.5 * sigma * sigma) * dt + sigma * Math.sqrt(dt) * z
+      );
+    points.push({ x: i, y: S });
+  }
+
+  return points;
+}
+
+/**
+ * Create an SVG path "d" attribute string from the array of points
+ */
+function createPath(points: Array<{ x: number; y: number }>) {
+  if (!points || points.length === 0) return "";
+  // Scale factor for x and y so it shows nicely on the SVG
+  const scaleX = 10;
+  const offsetY = 100; // shift downward to keep it visible
+  const scaleY = 0.5; // reduce amplitude
+
+  let d = `M ${points[0].x * scaleX} ${offsetY - points[0].y * scaleY}`;
+
+  for (let i = 1; i < points.length; i++) {
+    d += ` L ${points[i].x * scaleX} ${
+      offsetY - points[i].y * scaleY
+    }`;
+  }
+
+  return d;
+}
+
 export default function Home() {
+  const [pathD, setPathD] = useState("");
+
+  // Generate GBM data & path on mount
+  useEffect(() => {
+    const data = generateGBM();
+    const pathString = createPath(data);
+    setPathD(pathString);
+  }, []);
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -50,7 +114,28 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        {/* Animated Geometric Brownian Motion Chart */}
+        <motion.svg
+          width="600"
+          height="200"
+          className="mt-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.path
+            d={pathD}
+            stroke="#ec4899" /* 'pink-500' hex is #ec4899 */
+            strokeWidth="2"
+            fill="none"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 4, ease: "easeInOut" }}
+          />
+        </motion.svg>
       </main>
+
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
