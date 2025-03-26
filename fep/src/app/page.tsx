@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Orbitron } from "next/font/google";
+import { Roboto_Slab } from "next/font/google";
 
 /**
- * A more futuristic font
+ * Use Roboto Slab in the animation for the word "Factorial".
  */
-const orbitron = Orbitron({
-  weight: "600",
+const robotoSlab = Roboto_Slab({
+  weight: "700",
   subsets: ["latin"],
 });
 
@@ -48,9 +48,9 @@ function generateGBM(
 function createPath(points: Array<{ x: number; y: number }>) {
   if (!points || points.length === 0) return "";
   // Adjust these values to position and scale your curves
-  const scaleX = 15;
+  const scaleX = 25;
   const offsetY = 200;
-  const scaleY = 0.4;
+  const scaleY = 0.8;
 
   let d = `M ${points[0].x * scaleX} ${offsetY - points[0].y * scaleY}`;
 
@@ -103,14 +103,14 @@ export default function Home() {
             height="10"
             patternUnits="userSpaceOnUse"
           >
-            <circle cx="2" cy="2" r="1" fill="lightgray" />
+            <circle cx="2" cy="2" r="1" fill="#333333" />
           </pattern>
         </defs>
         {/* Slightly wider dotted rectangle so lines can extend beyond the top or sides */}
         <rect
-          x="160"
+          x="0"
           y="0"
-          width="480"
+          width="900"
           height="300"
           fill="url(#dots)"
         />
@@ -129,20 +129,20 @@ export default function Home() {
           />
         ))}
 
-        {/* Logo (text) in the middle of the framer animation */}
+        {/* Logo (text) in the middle of the framer animation using Roboto Slab */}
         <motion.text
           textAnchor="middle"
           dominantBaseline="middle"
           x="50%"
-          y="50%"
-          className={orbitron.className}
+          y="40%"
+          className={robotoSlab.className}
           fill="#ec4899"
-          fontSize="48"
+          fontSize="72"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 4, duration: 1 }}
         >
-          Factorial 🥳
+         F☄️ctorial
         </motion.text>
       </motion.svg>
     </div>

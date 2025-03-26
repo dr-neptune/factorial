@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Roboto_Slab } from "next/font/google";
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +10,12 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
+
+// Import Roboto Slab at a suitable weight for your nav branding
+const robotoSlab = Roboto_Slab({
+  weight: "700",
+  subsets: ["latin"],
+});
 
 export default function NavBar() {
   return (
@@ -19,8 +26,11 @@ export default function NavBar() {
           <div className="flex items-center">
             {/* Logo & Title */}
             <div className="flex items-center space-x-2 mr-6">
-              <span className="text-2xl">🥳</span>
-              <span className="font-bold text-xl">Factorial</span>
+              <span
+                className={`${robotoSlab.className} text-xl font-bold`}
+              >
+                F☄️ctorial
+              </span>
             </div>
             {/* Main Nav Items */}
             <div className="flex items-center space-x-4">
@@ -86,7 +96,9 @@ export default function NavBar() {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Community-shared strategies, premium templates, expert-curated factor blends</p>
+                  <p>
+                    Community-shared strategies, premium templates, expert-curated factor blends
+                  </p>
                 </TooltipContent>
               </Tooltip>
 
