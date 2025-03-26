@@ -84,99 +84,114 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-0 sm:p-0">
-      {/* Full-width SVG with lines and dotted background */}
-      <motion.svg
-        className="w-full h-[250px]"
-        viewBox="0 0 1250 250"
-        preserveAspectRatio="none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        <defs>
-          <pattern
-            id="dots"
-            x="0"
-            y="0"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
+
+      {/*
+        A container to hold both the animation as a background
+        and the ad-read text overlapping it.
+      */}
+      <div className="relative w-full min-h-[250px]">
+        {/* The animation as a background */}
+        <div className="absolute inset-0 z-0">
+          <motion.svg
+            className="w-full h-full"
+            viewBox="0 0 1250 250"
+            preserveAspectRatio="none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
           >
-            <circle cx="2" cy="2" r="1" fill="#333333" />
-          </pattern>
-        </defs>
+            <defs>
+              <pattern
+                id="dots"
+                x="0"
+                y="0"
+                width="10"
+                height="10"
+                patternUnits="userSpaceOnUse"
+              >
+                <circle cx="2" cy="2" r="1" fill="#333333" />
+              </pattern>
+            </defs>
 
-        <rect x="0" y="0" width="1250" height="250" fill="url(#dots)" />
+            <rect x="0" y="0" width="1250" height="250" />
 
-        {paths.map((pathD, i) => (
-          <motion.path
-            key={i}
-            d={pathD}
-            stroke={colors[i]}
-            strokeWidth="2"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 4, ease: "easeInOut" }}
-          />
-        ))}
-      </motion.svg>
+            {paths.map((pathD, i) => (
+              <motion.path
+                key={i}
+                d={pathD}
+                stroke={colors[i]}
+                strokeWidth="2"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 4, ease: "easeInOut" }}
+              />
+            ))}
+          </motion.svg>
+        </div>
 
-      {/* Blurb immediately below */}
-      <div className={`${robotoSlab.className} max-w-2xl px-4 sm:px-8 text-center mt-6`}>
-        <p className="text-2xl sm:text-3xl font-semibold leading-snug text-foreground mb-4">
-          We make <span className="text-pink-500">Factorial</span>—a groundbreaking platform
-          forged to ignite a{" "}
-          <span className="text-pink-500">new era of investing</span>{" "}
-          <span role="img" aria-label="rocket">🚀</span>. This is your laboratory{" "}
-          <span role="img" aria-label="test tube">🧪</span> for financial ideas: rapidly design,
-          rigorously test, and effortlessly launch quant-powered investment
-          strategies that were once out of reach.
-        </p>
-        <p className="text-base sm:text-lg text-foreground/80 leading-relaxed">
-          Born at the cutting edge of finance and technology,{" "}
-          <span className="text-pink-500">Factorial</span> fuels a{" "}
-          <span className="text-pink-500">global community</span>{" "}
-          <span role="img" aria-label="globe">🌎</span> of bold investors, agile advisors, and
-          creative quants reshaping markets on their own terms. The future of
-          investing isn't just calculated—
-          <span className="text-pink-500">it's crafted</span>{" "}
-          <span role="img" aria-label="sparkles">✨</span>. Come build it with us.
-        </p>
+        {/*
+          The ad-read text container with an overlap:
+          push it upward a bit so it overlaps the background.
+          Increase top padding as needed for aesthetics.
+        */}
+        <div
+          className={`${robotoSlab.className} relative z-10 max-w-2xl mx-auto px-4 sm:px-8 text-center pt-10 pb-6`}
+          style={{ marginTop: "-40px" }}
+        >
+          <p className="text-2xl sm:text-3xl font-semibold leading-snug text-foreground mb-4">
+            We make <span className="text-pink-500">Factorial</span>—a groundbreaking platform
+            forged to ignite a{" "}
+            <span className="text-pink-500">new era of investing</span>{" "}
+            <span role="img" aria-label="rocket">🚀</span>. This is your laboratory{" "}
+            <span role="img" aria-label="test tube">🧪</span> for financial ideas: rapidly design,
+            rigorously test, and effortlessly launch quant-powered investment
+            strategies that were once out of reach.
+          </p>
+          <p className="text-base sm:text-lg text-foreground/80 leading-relaxed">
+            Born at the cutting edge of finance and technology,{" "}
+            <span className="text-pink-500">Factorial</span> fuels a{" "}
+            <span className="text-pink-500">global community</span>{" "}
+            <span role="img" aria-label="globe">🌎</span> of bold investors, agile advisors, and
+            creative quants reshaping markets on their own terms. The future of
+            investing isn't just calculated—
+            <span className="text-pink-500">it's crafted</span>{" "}
+            <span role="img" aria-label="sparkles">✨</span>. Come build it with us.
+          </p>
+        </div>
       </div>
 
-      {/* Modern, minimalistic, asymmetrical content area */}
-      {/* 
-        Wrap everything in a w-screen so the background color can stretch fully. 
+      {/*
+        Modern, minimalistic, asymmetrical content area with some extra space
+        to separate from the text above
       */}
       <div className="relative w-screen mt-16 px-4 sm:px-8">
-        {/* 
-          Background color block behind placeholders, 
-          extends ~50px top/bottom, from left=40% to the right edge of the screen 
+        {/*
+          Background color block behind placeholders,
+          extends ~50px top/bottom, from left=40% to the right edge of the screen
         */}
         <div
           className="absolute z-0 top-[-50px] bottom-[-50px] right-0"
           style={{ left: "40%", backgroundColor: "rgba(236, 72, 153, 0.2)" }}
         />
-        {/* 
-          The container that holds our two placeholders. 
-          We center it if you want, or keep it left aligned. 
+        {/*
+          The container that holds our two placeholders.
         */}
         <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-8 z-10">
-          {/* Left content area (larger) */}
+          {/* Left content area (larger) -> pic1.webp in /public */}
           <div className="flex-1 relative bg-white shadow-lg aspect-[16/9] overflow-hidden">
             <img
-              src="https://via.placeholder.com/800x450"
+              src="/pic1.webp"
               alt="Large placeholder"
               className="w-full h-full object-cover"
             />
           </div>
 
-          {/* Right content area (smaller) */}
+          {/* Right content area (smaller) -> pic2.webp in /public */}
           <div className="relative w-full md:w-[300px] flex-shrink-0 h-auto">
             <div className="bg-white shadow-lg aspect-[4/3] overflow-hidden">
               <img
-                src="https://via.placeholder.com/600x450"
+                src="/pic2.webp"
                 alt="Smaller placeholder"
                 className="w-full h-full object-cover"
               />
